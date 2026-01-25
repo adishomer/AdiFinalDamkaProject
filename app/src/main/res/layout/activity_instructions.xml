@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="#A6D9D3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Instructions">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הוראות למשחק דמקה"
+        android:textSize="40dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="............................................................................................................"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="משחק דמקה הוא אחד מהמשחקים הקלאסיים והאהובים ביותר מבין משחקי הקופסה בישראל.
+        דמקה נחשב לפעילות מהנה ומאתגרת המתאימה לילדים, בני נוער ומבוגרים כאחד.
+"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"></TextView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="............................................................................................................"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎲 כמה משבצות יש בלוח דמקה?"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" הוא משחק לוח המתנהל לרוב על לוח בן  64 משבצות (8 על 8), בדיוק כמו לוח שחמט.
+"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="............................................................................................................"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="⚙️ סידור הלוח – איך מתחילים?"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="הלוח מסודר כך שהמשבצת הימנית ביותר בשורה הקרובה לכל שחקן היא לבנה.
+משחקים רק על המשבצות השחורות.
+אבני המשחק של כל שחקן מסודרות בשלוש השורות הקרובות אליו, רק על המשבצות השחורות.
+השחקן הלבן מבצע את המהלך הראשון, ולאחר מכן השחור – וכך לסירוגין.
+
+"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="............................................................................................................"></TextView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎯 מטרת המשחק"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="מטרת השחקן היא להוריד מהלוח את כל אבני היריב, או לחסום אותן כך שלא יוכלו לזוז.
+השחקן שנשאר ללא אבנים, )או שאין לו מהלכים אפשריים, מפסיד(
+"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="............................................................................................................"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" תנועת האבנים"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="אבני המשחק הרגילות נעות רק קדימה ובאלכסון, ממשבצת שחורה אחת לשכנה פנויה.
+האבן יכולה לנוע שמאלה קדימה או ימינה קדימה, אך לא אחורה.
+לא ניתן לדלג או לעבור מעל אבן אחרת אלא אם כן מדובר במהלך אכילה."
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"></TextView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#233CD5"
+        android:text="back"
+        android:textSize="40dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="serif"
+        android:id="@+id/btnIn"></Button>
+
+</LinearLayout>
