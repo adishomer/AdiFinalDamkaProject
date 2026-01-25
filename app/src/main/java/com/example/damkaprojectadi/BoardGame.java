@@ -191,19 +191,40 @@ public class BoardGame extends View {
 
 
         boolean occupied = false;
-
         for (Coin c : coins) {
             if (c.x == squares[locationx][locationy].x + w / 2 &&
                     c.y == squares[locationx][locationy].y + w / 2) {
                 occupied = true;
             }
         }
-        if(squares[locationx][locationy].color == Color.parseColor("#C19A68") && !occupied )
-        {
 
+        boolean ligal = true;
+        if (coin.team == coin.TEAM_WHITE)
+        {
+            if (!(Math.abs(locationx-coin.col) == 1) || !(locationy-coin.row == 1))
+            {
+               ligal = false;
+            }
+
+        }
+        else
+        {
+            if (!(Math.abs(locationx-coin.col) == 1) || !(locationy-coin.row == -1))
+            {
+                ligal = false;
+            }
+
+        }
+
+
+
+        if(squares[locationx][locationy].color == Color.parseColor("#C19A68") && !occupied && ligal)
+        {
             // locate the coin in the middle of the square
             coin.x = squares[locationx][locationy].x+ w/2;
             coin.y = squares[locationx][locationy].y + w/2;
+            coin.col = locationx;
+            coin.row = locationy;
             coin.lastX = coin.x;
             coin.lastY = coin.y;
             switchTurn();
