@@ -9,6 +9,22 @@
     android:orientation="vertical"
     tools:context=".Setting">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textColor="@color/design_default_color_primary"
+        android:text="בחרו צבע"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_gravity="end"
+        ></Spinner>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
