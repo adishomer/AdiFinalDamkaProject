@@ -176,62 +176,69 @@ public class BoardGame extends View {
 
 
     private void updateCoinAfterRelease() {
-        int locationx = 0, locationy =0; // location of the Rectangle that the coin locate on
-        for(int i=0; i< NUM_OF_SQUARES;i++)
-        {
-            for(int j=0; j< NUM_OF_SQUARES; j++)
-            {
-                if(squares[i][j].didXandYInSquare(coin.x, coin.y))
-                {
-                    locationx = i;
-                    locationy = j;
+        int targetRow = -1, targetCol = -1;
+
+        //  מציאת המשבצת עליה הונח המטבע
+        for (int i = 0; i < NUM_OF_SQUARES; i++) { // i מייצג שורה
+            for (int j = 0; j < NUM_OF_SQUARES; j++) { // j מייצג עמודה
+                if (squares[i][j].didXandYInSquare(coin.x, coin.y)) {
+                    targetRow = i;
+                    targetCol = j;
                 }
             }
         }
 
+        // אם המטבע שוחרר מחוץ ללוח
+        if (targetRow == -1 || targetCol == -1) {
+            coin.x = coin.lastX;
+            coin.y = coin.lastY;
+            return;
+        }
 
+
+        //  בדיקה אם המשבצת תפוסה
         boolean occupied = false;
         for (Coin c : coins) {
-            if (c.x == squares[locationx][locationy].x + w / 2 &&
-                    c.y == squares[locationx][locationy].y + w / 2) {
+            if (c != coin && c.row == targetRow && c.col == targetCol) {
                 occupied = true;
+
             }
         }
 
-        boolean ligal = true;
-        if (coin.team == coin.TEAM_WHITE)
-        {
-            if (!(Math.abs(locationx-coin.col) == 1) || !(locationy-coin.row == 1))
-            {
-               ligal = false;
-            }
 
+//  בדיקת חוקיות התנועה (אלכסון קדימה בלבד)
+        boolean legal = false;
+        int rowDiff = targetRow - coin.row;
+        int colDiff = Math.abs(targetCol - coin.col);
+
+        if (coin.team == Coin.TEAM_WHITE) {
+            // לבן זז למטה (שורות עולות)
+            if (rowDiff == 1 && colDiff == 1) {
+                legal = true;
+            }
         }
         else
         {
-            if (!(Math.abs(locationx-coin.col) == 1) || !(locationy-coin.row == -1))
-            {
-                ligal = false;
+            // שחור זז למעלה (שורות יורדות)
+            if (rowDiff == -1 && colDiff == 1) {
+                legal = true;
             }
-
         }
 
-
-
-        if(squares[locationx][locationy].color == Color.parseColor("#C19A68") && !occupied && ligal)
-        {
-            // locate the coin in the middle of the square
-            coin.x = squares[locationx][locationy].x+ w/2;
-            coin.y = squares[locationx][locationy].y + w/2;
-            coin.col = locationx;
-            coin.row = locationy;
+//  ביצוע המהלך או חזרה אחורה
+        // בדיקה: צבע משבצת נכון, לא תפוס, ומהלך חוקי
+        if (squares[targetRow][targetCol].color == Color.parseColor("#C19A68") && !occupied && legal) {
+            coin.x = squares[targetRow][targetCol].x + w / 2;
+            coin.y = squares[targetRow][targetCol].y + w / 2;
+            coin.row = targetRow;
+            coin.col = targetCol;
             coin.lastX = coin.x;
             coin.lastY = coin.y;
             switchTurn();
         }
         else
-        {   // color of the square == WRITE
-            // if on White color, set the coin to the previous location
+        {
+            // מהלך לא חוקי - חזרה למיקום הקודם
             coin.x = coin.lastX;
             coin.y = coin.lastY;
         }
