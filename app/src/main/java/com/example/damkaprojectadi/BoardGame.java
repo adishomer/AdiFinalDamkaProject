@@ -10,14 +10,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class BoardGame extends View {
-    private ArrayList<Coin> coins;
+    private Coin[][] coins; // שינוי למערך דו-מימדי
     private Context context;
     private Square[][] squares;
     private Coin coin;
-    private Coin coin1, coin2, coin3, coin4, coin5,coin6,coin7,coin8;
     private boolean firstTime;
     private final int NUM_OF_SQUARES = 8;
-    private boolean isWhiteTurn= true;
+    private boolean isWhiteTurn = true;
+    private int startRow, startCol; // משתני עזר לדעת מאיפה המטבע התחיל
 
     private float w;
 
@@ -25,8 +25,8 @@ public class BoardGame extends View {
         super(context);
         this.context = context;
         squares = new Square[NUM_OF_SQUARES][NUM_OF_SQUARES];
+        coins = new Coin[NUM_OF_SQUARES][NUM_OF_SQUARES]; // אתחול המערך
         firstTime = true;
-        coins = new ArrayList<>();
     }
 
     @Override
@@ -49,26 +49,21 @@ public class BoardGame extends View {
         float h = w;
         int color;
 
-        for(int row=0; row< NUM_OF_SQUARES; row++) //שורה
+        for(int row=0; row< NUM_OF_SQUARES; row++)
         {
-            for(int col=0; col< NUM_OF_SQUARES; col++) //עמודה
+            for(int col=0; col< NUM_OF_SQUARES; col++)
             {
-                if(row%2 == 0) // Even line
+                if(row%2 == 0)
                 {
-                    if(col%2 == 0)
-                        color = Color.WHITE;
-                    else
-                        color = Color.parseColor("#C19A68");
+                    if(col%2 == 0) color = Color.WHITE;
+                    else color = Color.parseColor("#C19A68");
                 }
                 else
-                {   // Odd line
-                    if(col%2 == 0)
-                        color = Color.parseColor("#C19A68");
-                    else
-                        color = Color.WHITE;
+                {
+                    if(col%2 == 0) color = Color.parseColor("#C19A68");
+                    else color = Color.WHITE;
                 }
                 squares[row][col] = new Square(x,y,w,h,color);
-
                 x = x+w;
             }
             y = y + h;
@@ -77,29 +72,28 @@ public class BoardGame extends View {
     }
 
     private void initCoin(Canvas canvas) {
-        // set the coin location only once, at the beginning
-        float w = canvas.getWidth()/NUM_OF_SQUARES;
         float r = w/3;
         for (int row=0; row<NUM_OF_SQUARES; row++)
         {
             for(int col=0; col<NUM_OF_SQUARES; col++)
             {
-                if ((row + col) % 2 !=0)
+                if ((row + col) % 2 != 0)
                 {
-                    float x = col * w + w /2;
-                    float y = 600 + row * w + w/2;
-                    if (row < 3 )
+                    float x = col * w + w / 2;
+                    float y = 600 + row * w + w / 2;
+                    if (row < 3)
                     {
-                        coins.add(new Coin(x,y, r, Color.WHITE, Coin.TEAM_WHITE, row, col));
+                        // השמה במערך הדו-מימדי
+                        coins[row][col] = new Coin(x, y, r, Color.WHITE, Coin.TEAM_WHITE, row, col);
                     }
                     else if (row > 4)
                     {
-                        coins.add(new Coin(x,y, r, Color.BLACK, Coin.TEAM_BLACK, row, col));
+                        // השמה במערך הדו-מימדי
+                        coins[row][col] = new Coin(x, y, r, Color.BLACK, Coin.TEAM_BLACK, row, col);
                     }
                 }
             }
         }
-
     }
 
     private void drawBoard(Canvas canvas) {
@@ -113,22 +107,20 @@ public class BoardGame extends View {
     }
 
     private void drawCoin(Canvas canvas) {
-        for (Coin c : coins)
-        {
-            c.draw(canvas);
+        // מעבר על המערך הדו-מימדי וציור רק איפה שיש מטבע
+        for (int i = 0; i < NUM_OF_SQUARES; i++) {
+            for (int j = 0; j < NUM_OF_SQUARES; j++) {
+                if (coins[i][j] != null) {
+                    coins[i][j].draw(canvas);
+                }
+            }
         }
-
     }
 
-
-    private void switchTurn ()
-    {
-        if (isWhiteTurn==true)
-        {
+    private void switchTurn() {
+        if (isWhiteTurn == true) {
             isWhiteTurn = false;
-        }
-        else
-        {
+        } else {
             isWhiteTurn = true;
         }
     }
@@ -136,22 +128,26 @@ public class BoardGame extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
-        float y= event.getY();
+        float y = event.getY();
 
-        if (event.getAction()== MotionEvent.ACTION_DOWN)
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
         {
-            for (Coin c : coins)
-            {
-                if (c.didUserTouchMe(x,y)){
-                    if((isWhiteTurn && c.team== Coin.TEAM_WHITE) ||(!isWhiteTurn && c.team == Coin.TEAM_BLACK))
-                    {
-                        coin = c;
+            // חישוב של המיקום במערך לפי הלחיצה
+            int row = (int) ((y - 600) / w);
+            int col = (int) (x / w);
+
+            if (row >= 0 && row < 8 && col >= 0 && col < 8) {
+                if (coins[row][col] != null) {
+                    if ((isWhiteTurn && coins[row][col].team == Coin.TEAM_WHITE) || (!isWhiteTurn && coins[row][col].team == Coin.TEAM_BLACK)) {
+                        coin = coins[row][col];
+                        startRow = row; // שמירת המיקום המקורי
+                        startCol = col;
                     }
                 }
             }
         }
 
-        if(event.getAction() == MotionEvent.ACTION_MOVE)
+        if (event.getAction() == MotionEvent.ACTION_MOVE)
         {
             if (coin != null)
             {
@@ -161,7 +157,7 @@ public class BoardGame extends View {
             }
         }
 
-        if(event.getAction() == MotionEvent.ACTION_UP)
+        if (event.getAction() == MotionEvent.ACTION_UP)
         {
             if (coin != null)
             {
@@ -173,14 +169,13 @@ public class BoardGame extends View {
         return true;
     }
 
-
-
     private void updateCoinAfterRelease() {
-        int targetRow = -1, targetCol = -1;
+        int targetRow = -1;
+        int targetCol = -1;
 
-        //  מציאת המשבצת עליה הונח המטבע
-        for (int i = 0; i < NUM_OF_SQUARES; i++) { // i מייצג שורה
-            for (int j = 0; j < NUM_OF_SQUARES; j++) { // j מייצג עמודה
+        // 1. מציאת המשבצת (הלולאה שלך)
+        for (int i = 0; i < NUM_OF_SQUARES; i++) {
+            for (int j = 0; j < NUM_OF_SQUARES; j++) {
                 if (squares[i][j].didXandYInSquare(coin.x, coin.y)) {
                     targetRow = i;
                     targetCol = j;
@@ -188,59 +183,49 @@ public class BoardGame extends View {
             }
         }
 
-        // אם המטבע שוחרר מחוץ ללוח
+        // 2. בדיקה: האם אנחנו מחוץ ללוח?
         if (targetRow == -1 || targetCol == -1) {
             coin.x = coin.lastX;
             coin.y = coin.lastY;
-            return;
         }
+        else {
+            // --- בלוק ELSE גדול: אנחנו בתוך הלוח ---
 
+            boolean occupied = (coins[targetRow][targetCol] != null && coins[targetRow][targetCol] != coin);
+            int rowDiff = targetRow - startRow;
+            int colDiff = Math.abs(targetCol - startCol);
 
-        //  בדיקה אם המשבצת תפוסה
-        boolean occupied = false;
-        for (Coin c : coins) {
-            if (c != coin && c.row == targetRow && c.col == targetCol) {
-                occupied = true;
-
+            boolean legal = false;
+            if (coin.team == Coin.TEAM_WHITE) {
+                if (rowDiff == 1 && colDiff == 1) legal = true;
+            } else {
+                if (rowDiff == -1 && colDiff == 1) legal = true;
             }
-        }
 
+            // בדיקה סופית לביצוע המהלך
+            if (squares[targetRow][targetCol].color == Color.parseColor("#C19A68") && !occupied && legal) {
+                // עדכון המערך
+                coins[targetRow][targetCol] = coin;
+                coins[startRow][startCol] = null;
 
-//  בדיקת חוקיות התנועה (אלכסון קדימה בלבד)
-        boolean legal = false;
-        int rowDiff = targetRow - coin.row;
-        int colDiff = Math.abs(targetCol - coin.col);
+                // עדכון גרפי
+                coin.x = squares[targetRow][targetCol].x + w / 2;
+                coin.y = squares[targetRow][targetCol].y + w / 2;
 
-        if (coin.team == Coin.TEAM_WHITE) {
-            // לבן זז למטה (שורות עולות)
-            if (rowDiff == 1 && colDiff == 1) {
-                legal = true;
+                // עדכון נתונים
+                coin.row = targetRow;
+                coin.col = targetCol;
+                coin.lastX = coin.x;
+                coin.lastY = coin.y;
+
+                // החלפת תור (קורה רק אם המהלך חוקי!)
+                switchTurn();
             }
-        }
-        else
-        {
-            // שחור זז למעלה (שורות יורדות)
-            if (rowDiff == -1 && colDiff == 1) {
-                legal = true;
+            else {
+                // מהלך בתוך הלוח אבל לא חוקי - מחזירים למקום
+                coin.x = coin.lastX;
+                coin.y = coin.lastY;
             }
-        }
-
-//  ביצוע המהלך או חזרה אחורה
-        // בדיקה: צבע משבצת נכון, לא תפוס, ומהלך חוקי
-        if (squares[targetRow][targetCol].color == Color.parseColor("#C19A68") && !occupied && legal) {
-            coin.x = squares[targetRow][targetCol].x + w / 2;
-            coin.y = squares[targetRow][targetCol].y + w / 2;
-            coin.row = targetRow;
-            coin.col = targetCol;
-            coin.lastX = coin.x;
-            coin.lastY = coin.y;
-            switchTurn();
-        }
-        else
-        {
-            // מהלך לא חוקי - חזרה למיקום הקודם
-            coin.x = coin.lastX;
-            coin.y = coin.lastY;
         }
     }
 }
