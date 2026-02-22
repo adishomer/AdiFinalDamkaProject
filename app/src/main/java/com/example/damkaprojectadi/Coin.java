@@ -1,11 +1,13 @@
 package com.example.damkaprojectadi;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Coin extends Shape{
     float r;
     Paint p;
+    private boolean isKing;
     int team; // 1=White, -1 = Brown
     int row, col;
     public static final int TEAM_BLACK= -1;
@@ -18,15 +20,22 @@ public class Coin extends Shape{
         this.team=team;
         this.row=row;
         this.col=col;
-
+        this.isKing = false;
         lastX = x;  // x previous location
         lastY = y;  // y previous location
         p = new Paint();
         p.setColor(color);
     }
 
+    public void setKing ()
+    {
+        this.isKing = true;
+    }
     public void draw(Canvas canvas)
     {
+        if (isKing )
+            canvas.drawRect(x-r,y-r,x+r,y+r,p);
+        else
         canvas.drawCircle(x,y,r,p);
     }
 
