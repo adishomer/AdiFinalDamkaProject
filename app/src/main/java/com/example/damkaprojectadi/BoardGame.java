@@ -17,8 +17,9 @@ public class BoardGame extends View {
     private boolean firstTime;
     private final int NUM_OF_SQUARES = 8;
     private boolean isWhiteTurn = true;
+    private int countblack=12,countwhite=12;
     private int startRow, startCol,targetrow,targetcol; // משתני עזר לדעת מאיפה המטבע התחיל
-
+    private int backgroundColor = Color.parseColor("#eeddd2");
     private float w;
 
     public BoardGame(Context context) {
@@ -27,11 +28,13 @@ public class BoardGame extends View {
         squares = new Square[NUM_OF_SQUARES][NUM_OF_SQUARES];
         coins = new Coin[NUM_OF_SQUARES][NUM_OF_SQUARES]; // אתחול המערך
         firstTime = true;
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.drawColor(backgroundColor);
         if(firstTime)
         {
             initBoard(canvas);
@@ -40,8 +43,12 @@ public class BoardGame extends View {
         }
         drawBoard(canvas);
         drawCoin(canvas);
-    }
 
+    }
+public boolean IsGameOver()
+{
+    return countwhite+countblack<=5;
+}
     private void initBoard(Canvas canvas) {
         w = canvas.getWidth()/NUM_OF_SQUARES;
         float x = 0;
@@ -167,10 +174,10 @@ public class BoardGame extends View {
     }
 
     private void updateCoinAfterRelease() {
-         targetrow = -1;
-         targetcol = -1;
+        targetrow = -1;
+        targetcol = -1;
 
-        // 1. מציאת המשבצת (הלולאה שלך)
+        // 1. מציאת המשבצת
         for (int i = 0; i < NUM_OF_SQUARES; i++) {
             for (int j = 0; j < NUM_OF_SQUARES; j++) {
                 if (squares[i][j].didXandYInSquare(coin.x, coin.y)) {
@@ -181,28 +188,82 @@ public class BoardGame extends View {
         }
 
         // 2. בדיקה: האם אנחנו מחוץ ללוח?
-        if (targetrow == -1 || targetcol == -1) {
+        if (targetrow == -1 || targetcol == -1 ) {
             coin.x = coin.lastX;
             coin.y = coin.lastY;
         }
         else {
             // --- בלוק ELSE גדול: אנחנו בתוך הלוח ---
-
             boolean occupied = (coins[targetrow][targetcol] != null && coins[targetrow][targetcol] != coin);
             int rowDiff = targetrow - startRow;
-            int colDiff = Math.abs(targetcol - startCol);
+            int colAbsDiff = Math.abs(targetcol - startCol);
 
             boolean legal = false;
-            if (coin.team == Coin.TEAM_WHITE) {
-                if (rowDiff == 1 && colDiff == 1) legal = true;
-            } else {
-                if (rowDiff == -1 && colDiff == 1) legal = true;
+            boolean isEatingMove = false;
+
+            // בדיקה לתנועה רגילה (צעד אחד באלכסון)
+            if (!occupied) {
+                if ((coin.team == Coin.TEAM_WHITE || coin.GetisKing()) && rowDiff == 1 && colAbsDiff == 1) legal = true;
+                if ((coin.team == Coin.TEAM_BLACK || coin.GetisKing()) && rowDiff == -1 && colAbsDiff == 1) legal = true;
+
+                // בדיקת אכילה (דילוג של 2 משבצות)
+                if (Math.abs(rowDiff) == 2 && colAbsDiff == 2)
+                {
+                    int midRow = (startRow + targetrow) / 2;
+                    int midCol = (startCol + targetcol) / 2;
+
+                    // בדיקה אם יש כלי של היריב באמצע
+                    if (coins[midRow][midCol] != null && coins[midRow][midCol].team != coin.team) {
+
+                        // כאן התיקון: בדיקת כיוון האכילה
+                        if (coin.GetisKing()) {
+                            // מלך יכול לאכול לכל הכיוונים
+                            legal = true;
+                            isEatingMove = true;
+                        }
+                        else if (coin.team == Coin.TEAM_WHITE && rowDiff == 2) {
+                            // לבן אוכל רק "למטה" (שורות עולות)
+                            legal = true;
+                            isEatingMove = true;
+                        }
+                        else if (coin.team == Coin.TEAM_BLACK && rowDiff == -2) {
+                            // שחור אוכל רק "למעלה" (שורות יורדות)
+                            legal = true;
+                            isEatingMove = true;
+                        }
+
+                        // אם המהלך נקבע כחוקי, נמחק את הכלי הנאכל
+                        if (legal) {
+                            if (coins[midRow][midCol].color==Color.WHITE)
+                                countwhite--;
+                            else
+                                countblack--;
+                            coins[midRow][midCol] = null;
+                            if (IsGameOver()) {
+                                if (countblack > countwhite)
+                                    Toast.makeText(context, "black won", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(context, "white won", Toast.LENGTH_SHORT).show();
+                                // כאן להוסיף כפתור משחק חדש
+                            }
+
+                        }
+                    }
+                }
             }
 
-            // בדיקה סופית לביצוע המהלך
+            // בדיקה סופית לביצוע המהלך (רק על משבצת חומה)
             if (squares[targetrow][targetcol].color == Color.parseColor("#C19A68") && !occupied && legal) {
+
+                // בדיקת הכתרה למלך - אם לבן הגיע לשורה 7 או שחור לשורה 0
+                if (coin.team == Coin.TEAM_WHITE && targetrow == 7) {
+                    coin.setKing();
+                }
+                if (coin.team == Coin.TEAM_BLACK && targetrow == 0) {
+                    coin.setKing();
+                }
+
                 // עדכון המערך
-                if (targetrow==7) coin.setKing();
                 coins[targetrow][targetcol] = coin;
                 coins[startRow][startCol] = null;
 
@@ -216,11 +277,11 @@ public class BoardGame extends View {
                 coin.lastX = coin.x;
                 coin.lastY = coin.y;
 
-                // החלפת תור (קורה רק אם המהלך חוקי!)
+                // החלפת תור
                 switchTurn();
             }
             else {
-                // מהלך בתוך הלוח אבל לא חוקי - מחזירים למקום
+                // מהלך לא חוקי - מחזירים למקום המקורי
                 coin.x = coin.lastX;
                 coin.y = coin.lastY;
             }

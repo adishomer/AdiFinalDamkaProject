@@ -18,7 +18,6 @@ public class Square extends Shape{
 
     public void draw (Canvas canvas)
     {
-
         canvas.drawRect(x,y,x+w,y+h,p);
     }
 

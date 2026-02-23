@@ -31,12 +31,23 @@ public class Coin extends Shape{
     {
         this.isKing = true;
     }
-    public void draw(Canvas canvas)
+    public boolean GetisKing()
     {
-        if (isKing )
-            canvas.drawRect(x-r,y-r,x+r,y+r,p);
-        else
-        canvas.drawCircle(x,y,r,p);
+        return this.isKing;
+    }
+    public void draw(Canvas canvas) {
+        // 1. ציור החייל עצמו (עיגול)
+        canvas.drawCircle(x, y, r, p);
+
+        // 2. אם הוא מלך, נצייר כתר מעליו
+        if (isKing) {
+            Paint crownPaint = new Paint();
+            crownPaint.setTextSize(50); //גודל הכתר
+            crownPaint.setTextAlign(Paint.Align.CENTER);
+
+            // ה-y מחושב כך שהאימוג'י יהיה במרכז העיגול
+            canvas.drawText("👑", x, y + (r / 3), crownPaint);
+        }
     }
 
     public boolean didUserTouchMe(float xu, float yu)
