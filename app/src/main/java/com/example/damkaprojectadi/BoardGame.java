@@ -6,11 +6,12 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 
 public class BoardGame extends View {
-    private Coin[][] coins; // שינוי למערך דו-מימדי
+    private Coin[][] coins;
     private Context context;
     private Square[][] squares;
     private Coin coin;
@@ -18,7 +19,7 @@ public class BoardGame extends View {
     private final int NUM_OF_SQUARES = 8;
     private boolean isWhiteTurn = true;
     private int countblack=12,countwhite=12;
-    private int startRow, startCol,targetrow,targetcol; // משתני עזר לדעת מאיפה המטבע התחיל
+    private int startRow, startCol,targetrow,targetcol;
     private int backgroundColor = Color.parseColor("#eeddd2");
     private float w;
 
@@ -35,6 +36,18 @@ public class BoardGame extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(backgroundColor);
+        // הוספת הכותרת
+        Paint textPaint = new Paint();
+        textPaint.setColor(Color.BLACK); // צבע הטקסט
+        textPaint.setTextSize(100);      // גודל הטקסט
+        //textPaint.setFakeBoldText(true); // הדגשה (Bold)
+        textPaint.setTextAlign(Paint.Align.CENTER); // מרכזי את הטקסט לפי ה-X שניתן לו
+
+        // חישוב המיקום: אמצע רוחב המסך, וגובה של 250 פיקסלים מלמעלה
+        float xPos = canvas.getWidth() / 2;
+        float yPos = 250;
+
+        canvas.drawText("DAMKA", xPos, yPos, textPaint);
         if(firstTime)
         {
             initBoard(canvas);
