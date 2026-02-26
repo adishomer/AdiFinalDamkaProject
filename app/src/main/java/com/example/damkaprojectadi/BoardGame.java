@@ -160,6 +160,7 @@ public boolean IsGameOver()
                         startCol = col;
                     }
                 }
+
             }
         }
 
@@ -178,10 +179,14 @@ public boolean IsGameOver()
             if (coin != null)
             {
                 updateCoinAfterRelease();
+                ((GameActivity)context).fbModule.setPositionInFirebase(new Position(startRow,startCol, coin.row,coin.col));
                 coin = null;
+
 
                 invalidate();
             }
+
+
         }
         return true;
     }
@@ -299,5 +304,9 @@ public boolean IsGameOver()
                 coin.y = coin.lastY;
             }
         }
+    }
+
+    public void setPositionReceiveFromFirebase(Position position) {
+
     }
 }
