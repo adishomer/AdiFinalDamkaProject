@@ -1,44 +1,44 @@
 package com.example.damkaprojectadi;
 
 public class Position {
-    private int newLine;
-    private int newCol;
-    private int lastLine;
+    private int startRow;
+    private int startCol;
+    private int lastRow;
     private int lastCol;
 
     public Position() {
         // חייבים ליצור פעולה בונה ריקה בשביל הפיירבייס
     }
 
-    public Position(int newLine, int newCol, int lastLine, int lastCol) {
-        this.newLine = newLine;
-        this.newCol = newCol;
-        this.lastLine = lastLine;
+    public Position(int startRow, int startCol, int lastRow, int lastCol) {
+        this.startRow = startRow;
+        this.startCol = startCol;
+        this.lastRow = lastRow;
         this.lastCol = lastCol;
     }
 
-    public int getNewLine() {
-        return newLine;
+    public int getStartRow() {
+        return startRow;
     }
 
-    public void setNewLine(int newLine) {
-        this.newLine = newLine;
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
     }
 
-    public int getNewCol() {
-        return newCol;
+    public int getStartCol() {
+        return startCol;
     }
 
-    public void setNewCol(int newCol) {
-        this.newCol = newCol;
+    public void setStartCol(int startCol) {
+        this.startCol = startCol;
     }
 
-    public int getLastLine() {
-        return lastLine;
+    public int getLastRow() {
+        return lastRow;
     }
 
-    public void setLastLine(int lastLine) {
-        this.lastLine = lastLine;
+    public void setLastRow(int lastRow) {
+        this.lastRow = lastRow;
     }
 
     public int getLastCol() {

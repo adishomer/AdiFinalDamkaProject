@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void setPositionFromFb(Position position) {
-        Toast.makeText(this, "" + position.getLastCol() + " " + position.getNewCol(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + position.getLastCol() + " " + position.getStartCol(), Toast.LENGTH_SHORT).show();
         boardGame.setPositionReceiveFromFirebase(position);
     }
 }

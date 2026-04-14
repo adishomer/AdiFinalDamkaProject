@@ -22,6 +22,8 @@ public class BoardGame extends View {
     private int startRow, startCol,targetrow,targetcol;
     private int backgroundColor = Color.parseColor("#eeddd2");
     private float w;
+    //private Bitmap homeButton;
+
 
     public BoardGame(Context context) {
         super(context);
