@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "875348351816",
+    "firebase_url": "https://damkaprojectadi-default-rtdb.firebaseio.com",
+    "project_id": "damkaprojectadi",
+    "storage_bucket": "damkaprojectadi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875348351816:android:6c0641131594f26467717d",
+        "android_client_info": {
+          "package_name": "com.example.damkaprojectadi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMRyZTdwCALGIlGE6V8OP6OA3s3dLW6tI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
