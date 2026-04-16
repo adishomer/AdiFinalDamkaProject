@@ -1,6 +1,9 @@
 package com.example.damkaprojectadi;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -22,7 +25,10 @@ public class BoardGame extends View {
     private int startRow, startCol,targetrow,targetcol;
     private int backgroundColor = Color.parseColor("#eeddd2");
     private float w;
-    //private Bitmap homeButton;
+    private Bitmap homeButton;
+    private int homeButtonX, homeBttonY; // מיקום הכפתור
+    private int homeButtonSize =200; // גודל הכפתור
+    private  GameActivity gameActivity;
 
 
     public BoardGame(Context context) {
@@ -32,6 +38,8 @@ public class BoardGame extends View {
         coins = new Coin[NUM_OF_SQUARES][NUM_OF_SQUARES]; // אתחול המערך
         firstTime = true;
 
+        homeButton = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow);
+        homeButton = Bitmap.createScaledBitmap(homeButton, homeButtonSize, homeButtonSize, true);
     }
 
     @Override
@@ -59,6 +67,12 @@ public class BoardGame extends View {
         drawBoard(canvas);
         drawCoin(canvas);
 
+        homeButtonX = canvas.getWidth() - homeButtonSize - 50;
+        homeBttonY = 50;
+
+        if (homeButton != null) {
+            canvas.drawBitmap(homeButton, homeButtonX, homeBttonY, null);
+        }
     }
 public boolean IsGameOver()
 {
@@ -153,6 +167,11 @@ public boolean IsGameOver()
             // חישוב של המיקום במערך לפי הלחיצה
             int row = (int) ((y - 600) / w);
             int col = (int) (x / w);
+
+            if (x>= homeButtonX && x<= homeButtonX + homeButtonSize &&
+                    y>= homeBttonY && y<= homeBttonY + homeButtonSize){
+                Intent i =new Intent(((GameActivity)context), MainActivity.class);
+            }
 
             if (row >= 0 && row < 8 && col >= 0 && col < 8) {
                 if (coins[row][col] != null) {
