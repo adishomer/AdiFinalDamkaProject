@@ -171,6 +171,7 @@ public boolean IsGameOver()
             if (x>= homeButtonX && x<= homeButtonX + homeButtonSize &&
                     y>= homeBttonY && y<= homeBttonY + homeButtonSize){
                 Intent i =new Intent(((GameActivity)context), MainActivity.class);
+                context.startActivity(i);
             }
 
             if (row >= 0 && row < 8 && col >= 0 && col < 8) {
@@ -328,6 +329,5 @@ public boolean IsGameOver()
     }
 
     public void setPositionReceiveFromFirebase(Position position) {
-
     }
 }

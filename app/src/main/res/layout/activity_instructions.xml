@@ -12,115 +12,113 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="הוראות למשחק דמקה"
+        android:text="הוראות המשחק "
         android:textSize="40dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        android:layout_marginRight="50dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="............................................................................................................"></TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="משחק דמקה הוא אחד מהמשחקים הקלאסיים והאהובים ביותר מבין משחקי הקופסה בישראל.
-        דמקה נחשב לפעילות מהנה ומאתגרת המתאימה לילדים, בני נוער ומבוגרים כאחד.
-"
-        android:textSize="20dp"
+        android:text="מטרת המשחק"
+        android:textSize="25dp"
+        android:textStyle="bold"
         android:layout_marginRight="10dp"></TextView>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="............................................................................................................"></TextView>
+        android:textSize="20dp"
+        android:text="לסיים את המשחק עם יותר כלים מהיריב"
+        android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🎲 כמה משבצות יש בלוח דמקה?"
+        android:text="מבנה המשחק"
         android:textSize="25dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" הוא משחק לוח המתנהל לרוב על לוח בן  64 משבצות (8 על 8), בדיוק כמו לוח שחמט.
-"
+        android:text="המשחק מתנהל על לוח משבצות, כאשר כל שחקן משחק עם כלים בצבע שלו.
+השחקן הלבן מתחיל ראשון."
         android:textSize="20dp"
         android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="............................................................................................................"></TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="⚙️ סידור הלוח – איך מתחילים?"
+        android:text="מהלך המשחק"
         android:textSize="25dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"></TextView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="הלוח מסודר כך שהמשבצת הימנית ביותר בשורה הקרובה לכל שחקן היא לבנה.
-משחקים רק על המשבצות השחורות.
-אבני המשחק של כל שחקן מסודרות בשלוש השורות הקרובות אליו, רק על המשבצות השחורות.
-השחקן הלבן מבצע את המהלך הראשון, ולאחר מכן השחור – וכך לסירוגין.
-
-"
+        android:text="בכל תור ניתן להזיז כלי אחד באלכסון למשבצת פנויה.
+כלי רגיל יכול לזוז רק קדימה ולא אחורה."
         android:textSize="20dp"
         android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="............................................................................................................"></TextView>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🎯 מטרת המשחק"
+        android:text="מלך"
         android:textSize="25dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="מטרת השחקן היא להוריד מהלוח את כל אבני היריב, או לחסום אותן כך שלא יוכלו לזוז.
-השחקן שנשאר ללא אבנים, )או שאין לו מהלכים אפשריים, מפסיד(
-"
+        android:text="כאשר כלי מגיע לצד האחרון של היריב הוא הופך למלך.
+מלך יכול לזוז לכל הכיוונים (קדימה ואחורה) אך רק משבצת אחת בכל תור."
         android:textSize="20dp"
         android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="............................................................................................................"></TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" תנועת האבנים"
+        android:text="אכילה"
         android:textSize="25dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="אבני המשחק הרגילות נעות רק קדימה ובאלכסון, ממשבצת שחורה אחת לשכנה פנויה.
-האבן יכולה לנוע שמאלה קדימה או ימינה קדימה, אך לא אחורה.
-לא ניתן לדלג או לעבור מעל אבן אחרת אלא אם כן מדובר במהלך אכילה."
+        android:text="ניתן לאכול כלי של היריב על ידי קפיצה מעליו אם המשבצת שאחריו פנויה.
+האכילה אינה חובה.
+מותר לבצע אכילה אחת בלבד בכל תור (אין אכילה כפולה).
+לאחר אכילה התור עובר ליריב."
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="סיום המשחקה"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="המשחק מסתיים כאשר נשארים חמישה כלים על הלוח.
+השחקן שיש לו יותר כלים הוא המנצח."
         android:textSize="20dp"
         android:layout_marginTop="10dp"></TextView>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#233CD5"
+        android:backgroundTint="#9C27B0"
         android:text="back"
         android:textSize="40dp"
         android:layout_marginTop="30dp"
