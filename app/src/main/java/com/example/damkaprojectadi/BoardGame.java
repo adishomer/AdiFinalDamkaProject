@@ -67,7 +67,7 @@ public class BoardGame extends View {
         drawBoard(canvas);
         drawCoin(canvas);
 
-        homeButtonX = canvas.getWidth() - homeButtonSize - 50;
+        homeButtonX = 50;
         homeBttonY = 50;
 
         if (homeButton != null) {
@@ -303,6 +303,7 @@ public boolean IsGameOver()
                     coin.setKing();
                 }
 
+
                 // עדכון המערך
                 coins[targetrow][targetcol] = coin;
                 coins[startRow][startCol] = null;
@@ -329,5 +330,29 @@ public boolean IsGameOver()
     }
 
     public void setPositionReceiveFromFirebase(Position position) {
+        // שליפת המטבע מהמיקום הישן
+        Coin movingCoin = coins[position.getStartRow()][position.getStartCol()];
+
+        if (movingCoin != null) {
+            // עדכון המיקום בתוך האובייקט של המטבע
+            movingCoin.row = position.getLastRow();
+            movingCoin.col = position.getLastCol();
+
+            // עדכון גרפי של המיקום (x, y) כדי שיופיע במרכז המשבצת החדשה
+            movingCoin.x = squares[position.getLastRow()][position.getLastCol()].x + w / 2;
+            movingCoin.y = squares[position.getLastRow()][position.getLastCol()].y + w / 2;
+            movingCoin.lastX = movingCoin.x;
+            movingCoin.lastY = movingCoin.y;
+
+            // עדכון המערך הדו-מימדי
+            coins[position.getLastRow()][position.getLastCol()] = movingCoin;
+            coins[position.getStartRow()][position.getStartCol()] = null;
+
+            // החלפת תור גם אצל השחקן השני
+            switchTurn();
+
+            // רענון המסך
+            invalidate();
+        }
     }
 }

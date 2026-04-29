@@ -21,6 +21,8 @@ public class FbModule {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         reference = firebaseDatabase.getReference("play");
+        setPositionInFirebase(null);
+        deletePosition();
         initFirebaseListener();
     }
 
@@ -45,5 +47,10 @@ public class FbModule {
     {
         reference.setValue(position);
     }
+
+    public void deletePosition() {
+        reference.removeValue();
+    }
+
 
 }

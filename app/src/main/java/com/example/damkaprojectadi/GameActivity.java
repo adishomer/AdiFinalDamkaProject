@@ -22,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
         fbModule = new FbModule(this);
 
-
+        fbModule.setPositionInFirebase(null);
 
     }
 
