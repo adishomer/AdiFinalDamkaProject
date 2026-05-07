@@ -28,7 +28,6 @@ public class BoardGame extends View {
     private Bitmap homeButton;
     private int homeButtonX, homeBttonY; // מיקום הכפתור
     private int homeButtonSize =200; // גודל הכפתור
-    private  GameActivity gameActivity;
 
 
     public BoardGame(Context context) {
@@ -217,7 +216,7 @@ public boolean IsGameOver()
         targetrow = -1;
         targetcol = -1;
 
-        // 1. מציאת המשבצת
+        //  מציאת המשבצת
         for (int i = 0; i < NUM_OF_SQUARES; i++) {
             for (int j = 0; j < NUM_OF_SQUARES; j++) {
                 if (squares[i][j].didXandYInSquare(coin.x, coin.y)) {
@@ -227,13 +226,13 @@ public boolean IsGameOver()
             }
         }
 
-        // 2. בדיקה: האם אנחנו מחוץ ללוח?
+        //  בדיקה: האם אנחנו מחוץ ללוח?
         if (targetrow == -1 || targetcol == -1 ) {
             coin.x = coin.lastX;
             coin.y = coin.lastY;
         }
         else {
-            // --- בלוק ELSE גדול: אנחנו בתוך הלוח ---
+            //  בלוק ELSE גדול: אנחנו בתוך הלוח
             boolean occupied = (coins[targetrow][targetcol] != null && coins[targetrow][targetcol] != coin);
             int rowDiff = targetrow - startRow;
             int colAbsDiff = Math.abs(targetcol - startCol);
