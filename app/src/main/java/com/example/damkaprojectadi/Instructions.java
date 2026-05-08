@@ -15,7 +15,7 @@ public class Instructions extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_instructions);
+        setContentView(R.layout.activity_instructions); // טעינת קובץ העיצוב הסטטי (XML) של מסך ההוראות
         btni = findViewById(R.id.btnIn);
         btni.setOnClickListener(this);
 

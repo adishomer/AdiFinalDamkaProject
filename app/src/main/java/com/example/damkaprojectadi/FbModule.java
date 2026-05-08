@@ -18,7 +18,6 @@ public class FbModule {
     public FbModule(Context context) {
         this.context = context;
 
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         reference = firebaseDatabase.getReference("play");
         setPositionInFirebase(null);
@@ -33,14 +32,15 @@ public class FbModule {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Position position = snapshot.getValue(Position.class);
                 if(position != null) // בדיקה שלא קוראים מצומת לא קיים בפיירבייס
-                    ((GameActivity)context).setPositionFromFb(position);
+                    ((GameActivity)context).setPositionFromFb(position); //פעולה זו מעדכנת את המסך הפיזי של השחקן בהתאם ללוח החדש שהתקבל מהענן
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        }
+        );
     }
 
     public void setPositionInFirebase(Position position)
