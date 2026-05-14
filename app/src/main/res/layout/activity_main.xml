@@ -23,17 +23,28 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#233CD5"
-        android:text="play"
+        android:backgroundTint="#101AE4"
+        android:text="Player1"
         android:textSize="40dp"
         android:layout_marginTop="130dp"
         android:fontFamily="serif"
-        android:id="@+id/btn1"/>
+        android:id="@+id/player1"></Button>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5766D7"
+        android:backgroundTint="#5056E9"
+        android:text="Player2"
+        android:textSize="40dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="serif"
+        android:id="@+id/player2"></Button>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#7C81E7"
         android:text="Instructions"
         android:textSize="40dp"
         android:layout_marginTop="50dp"
@@ -43,11 +54,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#8B8FE2"
+        android:backgroundTint="#9FA1EB"
         android:text="Setting"
         android:textSize="40dp"
         android:layout_marginTop="50dp"
         android:fontFamily="serif"
         android:id="@+id/btn3"/>
+
+
+
 
 </LinearLayout>

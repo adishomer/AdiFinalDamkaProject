@@ -200,7 +200,7 @@ public boolean IsGameOver()
             if (coin != null)
             {
                 updateCoinAfterRelease();
-                ((GameActivity)context).fbModule.setPositionInFirebase(new Position(startRow,startCol, coin.row,coin.col));
+                //((GameActivity)context).fbModule.setPositionInFirebase(new Position(startRow,startCol, coin.row,coin.col));
                 coin = null;
 
 
@@ -319,6 +319,8 @@ public boolean IsGameOver()
 
                 // החלפת תור
                 switchTurn();
+                ((GameActivity)context).fbModule.setPositionInFirebase(new Position(startRow,startCol, coin.row,coin.col));
+
             }
             else {
                 // מהלך לא חוקי - מחזירים למקום המקורי
@@ -333,19 +335,56 @@ public boolean IsGameOver()
         Coin movingCoin = coins[position.getStartRow()][position.getStartCol()];
 
         if (movingCoin != null) {
+            int startR = position.getStartRow();
+            int startC = position.getStartCol();
+            int lastR = position.getLastRow();
+            int lastC = position.getLastCol();
+
+            // בדיקה האם המהלך שהגיע מ-Firebase הוא מהלך אכילה (דילוג של 2 משבצות)
+            if (Math.abs(lastR - startR) == 2 && Math.abs(lastC - startC) == 2) {
+                int midRow = (startR + lastR) / 2;
+                int midCol = (startC + lastC) / 2;
+
+                // אם יש כלי במשבצת האמצעית, נמחק אותו ונעדכן את המונים
+                if (coins[midRow][midCol] != null) {
+                    if (coins[midRow][midCol].color == Color.WHITE) {
+                        countwhite--;
+                    } else {
+                        countblack--;
+                    }
+                    coins[midRow][midCol] = null; // מחיקת הכלי הנאכל בשחקן השני
+                }
+            }
+
+            // בדיקת הכתרה למלך גם אצל השחקן השני במידה והגיע לקצה
+            if (movingCoin.team == Coin.TEAM_WHITE && lastR == 7) {
+                movingCoin.setKing();
+            }
+            if (movingCoin.team == Coin.TEAM_BLACK && lastR == 0) {
+                movingCoin.setKing();
+            }
+
             // עדכון המיקום בתוך האובייקט של המטבע
-            movingCoin.row = position.getLastRow();
-            movingCoin.col = position.getLastCol();
+            movingCoin.row = lastR;
+            movingCoin.col = lastC;
 
             // עדכון גרפי של המיקום (x, y) כדי שיופיע במרכז המשבצת החדשה
-            movingCoin.x = squares[position.getLastRow()][position.getLastCol()].x + w / 2;
-            movingCoin.y = squares[position.getLastRow()][position.getLastCol()].y + w / 2;
+            movingCoin.x = squares[lastR][lastC].x + w / 2;
+            movingCoin.y = squares[lastR][lastC].y + w / 2;
             movingCoin.lastX = movingCoin.x;
             movingCoin.lastY = movingCoin.y;
 
             // עדכון המערך הדו-מימדי
-            coins[position.getLastRow()][position.getLastCol()] = movingCoin;
-            coins[position.getStartRow()][position.getStartCol()] = null;
+            coins[lastR][lastC] = movingCoin;
+            coins[startR][startC] = null;
+
+            // בדיקה האם המשחק נגמר בעקבות האכילה הזו
+            if (IsGameOver()) {
+                if (countblack > countwhite)
+                    Toast.makeText(context, "black won", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, "white won", Toast.LENGTH_SHORT).show();
+            }
 
             // החלפת תור גם אצל השחקן השני
             switchTurn();

@@ -17,7 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnPlay;
+    private Button btnPlayer1;
+    private Button btnPlayer2;
     private Button btnInstructions;
     private Button btnSetting;
     private ActivityResultLauncher<Intent> activityResultLauncher;
@@ -29,11 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        btnPlay= findViewById(R.id.btn1);
+        btnPlayer1= findViewById(R.id.player1);
+        btnPlayer2= findViewById(R.id.player2);
         btnInstructions= findViewById(R.id.btn2);
         btnSetting= findViewById(R.id.btn3);
 
-        btnPlay.setOnClickListener(this);
+        btnPlayer1.setOnClickListener(this);
+        btnPlayer2.setOnClickListener(this);
         btnInstructions.setOnClickListener(this);
         btnSetting.setOnClickListener(this);
 
@@ -58,8 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view==btnPlay)
+        if (view==btnPlayer1)
         {
+            Intent intent= new Intent(this, GameActivity.class);
+            startActivity(intent);
+        }
+        if (view==btnPlayer2){
             Intent intent= new Intent(this, GameActivity.class);
             startActivity(intent);
         }
@@ -90,18 +97,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (strColor)
         {
             case "Red":
-                linearLayout.setBackgroundColor(Color.RED); // 0x = hexadecimal
+                linearLayout.setBackgroundColor(Color.argb(255,170,0,0));
                 break;
 
             case "Blue":
-                linearLayout.setBackgroundColor(Color.BLUE);
+                linearLayout.setBackgroundColor(Color.argb(255,100,149,237));
                 break;
 
             case "Pink":
                 linearLayout.setBackgroundColor(Color.argb(255,255,192,203)); //Alfa Red Green Blue
                 break;
             default:
-                linearLayout.setBackgroundColor(Color.YELLOW);
+                linearLayout.setBackgroundColor(Color.argb(255,255,220,130));
                 break;
         }
 
