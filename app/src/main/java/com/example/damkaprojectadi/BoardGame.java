@@ -30,6 +30,7 @@ public class BoardGame extends View {
     private int homeButtonSize =200; // גודל הכפתור
 
 
+
     public BoardGame(Context context) {
         super(context);
         this.context = context;
@@ -73,10 +74,14 @@ public class BoardGame extends View {
             canvas.drawBitmap(homeButton, homeButtonX, homeBttonY, null);
         }
     }
-public boolean IsGameOver()
-{
-    return countwhite+countblack<=5;
-}
+    public boolean IsGameOver()
+    {
+        // המשחק נגמר אם לאחד הצדדים יש 0 כלים, או אם נשארו 5 כלים או פחות סך הכל
+        if (countwhite == 0 || countblack == 0) {
+            return true;
+        }
+        return (countwhite + countblack) <= 5;
+    }
     private void initBoard(Canvas canvas) {
         w = canvas.getWidth()/NUM_OF_SQUARES;
         float x = 0;
@@ -283,7 +288,7 @@ public boolean IsGameOver()
                                     Toast.makeText(context, "black won", Toast.LENGTH_SHORT).show();
                                 else
                                     Toast.makeText(context, "white won", Toast.LENGTH_SHORT).show();
-                                // כאן להוסיף כפתור משחק חדש
+
                             }
 
                         }
